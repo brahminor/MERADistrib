@@ -1,0 +1,28 @@
+
+span {  font-size: 14px;
+        font-family: "Inconsolata";
+   }
+
+h5.cl-ticket-count {
+    position: relative;
+    font-size: 14px;
+    z-index: 1;
+    overflow: hidden;
+    text-align: center;
+    font-family: "Inconsolata";
+    padding: 0 15px; 
+
+}
+h5.cl-ticket-count:before, h5.cl-ticket-count:after {
+    position: absolute;
+    top: 51%;
+    overflow: hidden;
+    width: 50%;
+    height: 1px;
+    content: '\a0';
+    background-color: black;
+    z-index: -1;
+
+}
+
+

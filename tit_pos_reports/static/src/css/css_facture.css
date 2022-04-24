@@ -1,0 +1,60 @@
+ .th{
+  text-align:center;
+  background-color:#696969 !important;
+  color: white;
+}
+#table_donnees {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+#table_donnees td, #table_donnees th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.rectangle{
+  border:1px solid;
+  padding: 5px 5px 5px 5px;
+  height: 114px;
+  border-radius: 7px;
+}
+.table{
+ border-collapse : separate;
+ border-spacing : 10px;
+
+}
+.table2{
+ border-collapse : separate;
+ border-spacing : 2px;
+ padding-bottom: 70px;
+}
+
+.espace{
+ height : 10px;
+}
+
+.table3{
+ border-spacing : 2px;
+ border:1px solid;
+ border-radius: 7px;
+ padding: 5px 5px 5px 5px;
+ height: 114px;
+}
+.currency{
+  font-style: italic;
+  padding-top: 18px;
+  text-align: right;
+}
+.no_split table,.no_split tr,.no_split td,.no_split th,.no_split tbody,.no_split thead,.no_split tfoot,.no_split p, .no_split div {
+    page-break-inside: avoid !important;
+     #parentDiv{
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
+        width:300px;
+        height:300px;
+        background-color:#ccc;
+        background-repeat:repeat
+  }
+}

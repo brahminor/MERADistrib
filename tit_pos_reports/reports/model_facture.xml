@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo> 
+  <template id="pos_report_template_facture" inherit_id="account.report_invoice_document">
+            <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+                <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                      <t t-set="tva" t-value="0"/>
+                            <div class="oe_structure"/>
+                             <link href="/tit_pos_reports/static/src/css/css_facture.css" rel="stylesheet"/>
+
+                             <div class="row ">
+                              <div class="col-xs-12"> 
+                                   <table >
+                                     <tr >
+                                          <td >
+                                               <img t-if="doc.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(doc.company_id.logo)" />
+                                          </td>
+                                        </tr>
+                                       <tr>
+                                          <td >
+                                             <b> <span t-field="doc.company_id.name"/></b>
+                                          </td>
+                                        </tr>
+                                        
+                                         <tr><td/></tr>
+                                   </table>
+                            </div>
+                            </div>
+                            <br/>
+                            <br/>
+                <div class="row ">        
+                    <div class="col-xs-6" style="width:50%;">
+                        <table style="">
+                        <tr >
+                          <td />
+                        </tr>
+                        <tr >
+                          <td >
+                            <span>
+                                <span t-esc="doc.company_id.street"/> 
+                            </span>
+                          </td>
+                       </tr>
+                       <tr >
+                          <td >
+                                <p> 
+                                    <span t-esc="doc.company_id.zip"/> <span t-esc="doc.company_id.city"/> - <span t-esc="doc.company_id.state_id.name"/>
+                                </p>
+                          </td>
+                       </tr>
+                        <tr >
+                          <td >
+                            <span>
+                                <span t-esc="doc.company_id.name"/> 
+                            </span>
+                             
+                          </td>
+                       </tr>
+                       <tr >
+                           <td>
+                            N° de SIRET : <span t-field="doc.company_id.siret"/>
+                          </td>
+                       </tr>
+                        <tr >
+                          <td >
+                            N° TVA : <span t-esc="doc.company_id.vat"/><br/>
+                          </td>
+                       </tr>
+                        <tr >
+                        <td >
+                            Tél : <span t-esc="doc.company_id.phone"/>
+                        </td>
+                        <td >    
+                        </td>
+                       </tr>
+                       <tr >
+                          <td  >
+                            E-Mail : <span t-esc="doc.company_id.email"/>
+                          </td>
+                       </tr>
+                       <tr>
+                          <td  style='text-align:left'>
+                            <span>
+                                RUNGIS le : <span style="background-color: #DCDCDC" t-esc="doc.invoice_date"/>
+                            </span>
+                          </td>                           
+                       </tr>                      
+              </table>
+         </div>
+         <div class="col-xs-6" style="width:50%;">
+            <div style="width:100%; "> 
+                 <p > <b> N° client:</b> <span style="background-color:#DCDCDC" t-esc="doc.partner_id.id"/><br /> </p>
+                
+            </div>
+           <table style=" width:300pt; height:153pt; border: 1pt solid black; border-collapse:separate; border-radius:8pt;padding:15pt">
+                <tr >
+                    <td ></td>
+                </tr>
+                <tr  style="">
+                    <td >
+                       <table >
+                        <tr>
+                          <td><b><span t-esc="doc.partner_id.name "/> </b></td>
+                        </tr>
+                        <tr/>
+                         <tr>
+                            <td><b><span t-esc="doc.partner_id.street "/></b></td>
+                        </tr>
+                           <tr >
+                              <td >
+                                    <p>
+                                        <span t-esc="doc.partner_id.zip"/> <span t-esc="doc.partner_id.city"/> - <span t-esc="doc.partner_id.state_id.name"/>
+                                    </p>
+
+                              </td>
+                       </tr>
+                      </table>
+                        </td> 
+                       </tr>
+                       <tr><td/></tr>
+            </table>
+            <div style="width:100%;"> 
+                 <p ><b>N° TVA :</b> <span style="background-color:#DCDCDC" t-esc="doc.partner_id.vat"/> </p>
+                  <br/>
+            </div>
+         </div>
+       </div>
+    <table style="margin-bottom:15px;"> <colgroup>
+                    <col width='35%' />
+                    <col width='15%' />
+                    <col width='25%' />
+                    <col width='25%' />  
+               </colgroup>
+                  <tr>
+                    <td ><b>Facture N°:</b> <span style="background-color:#DCDCDC" t-esc="doc.name"/>
+                    </td>
+                     <td />
+                    <td ><b>Echéance :</b> <span style="background-color: #DCDCDC" t-esc="doc.invoice_date_due"/>
+                    </td>
+                    <td />
+                  </tr>
+              </table>
+ 
+   <div class="row ">  
+    <div class="col-xs-12"> 
+       <t t-set="tva" t-value="0"/>
+       <t t-set="colis" t-value="0"/>
+       <t t-set="m_h_t" t-value="0"/>
+           <table id="table_donnees" class="table2">
+               <colgroup>
+                    <col width='5%' />
+                    <col width='25%' />
+                    <col width='10%' />
+                    <col width='10%' />
+                    
+                    <col width='10%' />
+                    <col width='15%' />
+                    <col width='10%' />
+                    <col width='15%' />
+               </colgroup>
+               <t t-set="sl_no" t-value='0'/>
+                    <tr style="border: 1px solid rgb(0, 0, 0);">
+                            <th class="th">Colis</th>
+                            <th class="th">Article</th>
+                            <th class="th">T</th>
+                            <th class="th">Lot</th>
+                           
+                            <th class="th">Tare</th>
+                            <th class="th">Poids Net</th>
+                            <th class="th">U.F</th>
+                            <th class="th">PU</th>
+                            <th class="th">Mont.H.T</th>
+
+                    </tr>
+                    <tr t-foreach="doc.invoice_line_ids" t-as="l">
+                                <td>
+                                     <span t-field="l.quantity"/>
+                                    <t t-set="colis" t-value="colis + l.quantity"/>
+                                </td>
+                                <td ><span t-field="l.product_id.name"/></td>
+                                <td style='text-align:right'>
+                                    <t t-foreach="l.tax_ids" t-as="tax">
+                                        <t t-set="tva" t-value="tax.amount"/>
+                                        <span t-esc="tva"/>
+                                    </t>       
+                                </td>
+                                <td>
+                                    <span t-esc="doc.get_lot(doc.id,l.product_id.id)"/>
+                                 </td>
+                                
+                                <td></td>
+                                <td class="text-right">
+                                    <span t-esc="doc.get_poids_net(l.product_id.id,l.quantity)"/>
+                                
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.product_uom_id"/>
+                                
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.price_unit"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.price_subtotal"
+                                        t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                        <t t-set="m_h_t" t-value="m_h_t + l.price_subtotal"/>
+                                </td>
+                    </tr>
+                    <tr class="no_split">
+                                <td class="th"><b>
+                                    <span t-esc="'{0:,.2f}'.format(float(colis)).replace(',',' ')" />
+                                </b></td>
+                                <td colspan="3" style="border:none"><b>
+                                    
+                                </b></td>
+                               
+                                <td style="border:none">
+                                </td>
+                                <td class="th" >
+                                    <b>
+                                    <span t-esc="'{0:,.2f}'.format(float(colis)).replace(',',' ')" />
+                                    </b>
+                                </td>
+                                <td colspan="2" style="border:none">
+                                </td>
+                                <td class="th" >
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(m_h_t)).replace(',',' ')" />
+                                    </b>
+                                </td>  
+                        </tr>
+                 </table>
+        </div>
+ </div>
+
+   <div style="border: 1pt solid black; border-radius:22px; text-align:center; margin-top:20px;">
+            <p>Traitement :</p>
+    </div>
+    <table class="table2" id="table_donnees" width='100%' style="margin-top:10px">
+               <colgroup>
+                    <col width='15%' />
+                    <col width='13%' />
+                    <col width='13%' />
+                    <col width='13%' />
+                    <col width='13%' />
+                    <col width='13%' />
+                    <col width='20%' />
+                    
+               </colgroup>
+               <t t-set="sl_no" t-value='0'/>
+                    <tr style="border: 1px solid rgb(0, 0, 0);">
+                            <th class="th">TOTAL HT</th>
+                            <th class="th">CTIFL</th>
+                            <th class="th">INTERFEL</th>
+                            <th class="th">BASE TVA</th>
+                            <th class="th">TVA %</th>
+                            <th class="th">Montant TVA</th>
+                            <th class="th">Montant TTC</th>     
+                    </tr>
+                    <t t-foreach="doc.get_total_for_tva()" t-as="ln">   
+                    <tr style="height: 58px;">
+                        <td style='text-align:right'><span> <t t-esc="ln['base']"/></span></td>
+                        <td style='text-align:right'></td>
+                        <td style='text-align:right'></td>
+
+                        <td style='text-align:right'>
+                          <span> <t t-esc="ln['base']"/></span>
+                        </td>
+                       
+                        <td style='text-align:right'>
+                            
+                          <span> <t t-esc="ln['tva']"/></span>
+                        </td>
+                        <td style='text-align:right'>
+                           <span> <t t-esc="ln['amount']"/></span>
+                        </td>
+                        <td  style='text-align:right' >
+                             <span t-field="doc.amount_total"/>
+                        </td>
+                     </tr>
+                   </t>
+                 </table>
+                <div style="width:100%; margin-bottom:20px"> 
+                    <p style="text-align:right;">Solde à ce jour : </p>
+                </div>
+                <div style="width:100%; margin-bottom:20px; font-size:15px"> 
+                    <p t-if="doc.narration" name="comment">
+                        <span ><b>Conditions générales de ventes:</b> <br/></span>
+                        <span t-field="doc.narration"/>
+                    </p>
+                </div>
+            </div>
+        </t>
+    </t>
+</t> 
+</xpath>
+</template>        
+</odoo>
