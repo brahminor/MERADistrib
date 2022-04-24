@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.PaymentScreen" t-inherit-mode="extension">
+           <xpath expr="//div[hasclass('payment-controls')]" position="after">
+               <div>  
+                    <div id="button_client_name"  style="font-size: 22px; font-weight: bold; word-wrap: break-word;">
+                        <b> Client :</b>
+                        <div  class="button button_client_name"   style="font-size: 25px; color:#43996E; font-weight: bold;">
+                             _
+                        </div>
+                    </div>
+
+                    <div id="my_button_avoir"  style="font-size: 22px; font-weight: bold;">
+                        <b> Avoir :</b>
+                        <div  class="button avoir_btn"   style="font-size: 25px; color:#43996E; font-weight: bold;">
+                            0.0
+                        </div>
+                    </div>
+                
+                </div>
+           </xpath>
+           <xpath expr="//div[hasclass('customer-button')]" position="before">
+                   <section class="debloquer_client"  style="font-weight: bold; font-size: 20px; color:#43996E"  >
+                      <label class="switch" > Débloquer le client
+                        <input type="checkbox" id="debloc_client" name="debloc_client" value="yes"/>
+                      </label>
+                   </section> 
+            </xpath>
+           
+    </t>
+</templates>
