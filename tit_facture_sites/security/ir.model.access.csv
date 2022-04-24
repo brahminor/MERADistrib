@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+
+access_factures_sites_comptable,factures_sites access,tit_facture_sites.model_factures_sites,tit_pos_order.group_comptable,1,0,1,0
+
+access_factures_sites_caissier,factures_sites access,tit_facture_sites.model_factures_sites,tit_pos_order.group_caissier,1,0,1,0
+
+access_factures_sites_group_account_manager,factures_sites access,tit_facture_sites.model_factures_sites,account.group_account_manager,1,1,1,1
+

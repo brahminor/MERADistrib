@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_factures_all_sites_tree" model="ir.ui.view">
+        <field name="name">Factures de tous les sites</field>
+        <field name="model">factures.sites</field>
+        <field name="arch" type="xml">
+            <tree string="Factures de tous les sites" >
+                <field name="facture_id"/>
+                <field name="numero"/>
+                <field name="client_id"/>
+                <field name="date_facturation"/>
+                <field name="date_echeance" />
+                <field name="societe" />
+                <field name="amount_total" />
+                <field name="amount" />
+                <field name="payment_state" widget="badge" decoration-danger="payment_state == 'not_paid'" decoration-warning="payment_state in ('partial', 'in_payment')" decoration-success="payment_state in ('paid', 'reversed')" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_factures_all_sites_form" model="ir.ui.view">
+        <field name="name">Factures de tous les sites</field>
+        <field name="model">factures.sites</field>
+        <field name="arch" type="xml">
+            <form string="Factures de tous les sites">
+                <sheet>
+                    <group col="2">
+                        <field name="facture_id"/>
+                        <field name="numero"/>
+                        <field name="client_id"/>
+                        <field name="date_facturation"/>
+                    </group>
+                    <group col="2">
+                        <field name="date_echeance" />
+                        <field name="societe" />
+                        <field name="amount_total" />
+                        <field name="amount" />
+                        <field name="payment_state" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_factures_all_sites_filter" model="ir.ui.view">
+            <field name="name">Factures de tous les sites</field>
+            <field name="model">factures.sites</field>
+            <field name="arch" type="xml">
+                <search string="Recherche factures de tous les sites">
+                    <field name="facture_id"/>
+                    <field name="numero"/>
+                    <field name="client_id"/>
+                    <field name="societe" />
+                    <field name="payment_state" />
+                </search>
+            </field>
+        </record>
+
+    <record id="action_factures_all_sites" model="ir.actions.act_window">
+        <field name="name">Factures de tous les sites</field>
+        <field name="res_model">factures.sites</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="view_factures_all_sites_tree"/>
+    </record>
+
+    <menuitem id="factures_all_sites" name="Factures de tous les sites" parent="account.menu_finance" action="action_factures_all_sites" groups="tit_pos_order.group_comptable,tit_pos_order.group_caissier,account.group_account_manager"/>
+
+</odoo>
