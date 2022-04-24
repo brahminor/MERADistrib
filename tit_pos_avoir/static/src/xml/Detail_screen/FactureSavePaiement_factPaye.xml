@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="FactureSavePaiement_factPaye" owl="1">
+        <div class="ticket-screen screen">
+            <div class="screen-facture">
+                <div class="controls">
+                    <div class="buttons_back">
+                        <button class="button back"  t-on-click="showScreen('FacturesPayee')">
+                            <span class="back_text">Fermer</span>
+                        </button>  
+                    </div>
+                    <div class="button_enreg_paiement_btn">
+                        <button class='button button_enreg_paiement' title="Enregistrer le paiement" style="right:100%; background-color: #43996E; color:white; border-radius:22px; margin:5px;"  t-on-change="captureChange" t-on-click="enregistrer_paiement(  props.facture_selected.id)">
+                            Créer un paiement
+                        </button>
+                    </div>
+                    </div>
+                <div class="client-select" style="font-size: 24px; font-weight: bold; margin: 20px">
+                     <table style="margin:auto">
+                        <tr>
+                            <td style=" padding-bottom: 1em;">
+                                <span class="label">Référence  :</span>
+                            </td>
+                            <td style=" padding-bottom: 1em; ">
+                                <input class="detail mntnt" id="ref_fact" name="ref" t-att-value="get_ref_client(props.facture_selected.id)" readonly="1" style="font-size: 22px; border:none;"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" padding-bottom: 1em;">
+                                <span class="label">Client  :</span>
+                            </td>
+                            <td style=" padding-bottom: 1em; ">
+                                <input class="detail client_selectionne" name="client_recuperes_name" t-att-value="get_name_client(props.facture_selected)" readonly="1" style="font-size: 22px; border:none;"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" padding-bottom: 1em;">
+                                <span class="label">Avoir du client  :</span>
+                            </td>
+                            <td style=" padding-bottom: 1em; ">
+                              <input class="detail client_selectionne" name="client_recuperes_avoir" t-att-value="get_avoir_client(props.facture_selected)" readonly="1" style="font-size: 22px;  color:RED; border:none; "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" padding-bottom: 1em;">
+                                <span class="label">Montant total facture :</span>
+                            </td>
+                            <td style=" padding-bottom: 1em; ">
+                               <input class="detail mntnt" id="montant_total" name="montant_total" t-att-value="get_amount_total(props.facture_selected.id)" readonly="1" style="font-size: 22px; border:none;"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" padding-bottom: 1em;">
+                                <span class="label">Montant dû :</span>
+                            </td>
+                            <td style=" padding-bottom: 1em; ">
+                               <input class="detail mntnt" id="amount_residual" name="montant_du" t-att-value="get_amount_residual(props.facture_selected.id)" readonly="1" style="font-size: 22px; border:none;"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" padding-bottom: 1em;">
+                                <span class="label">Montant dû :</span>
+                            </td>
+                            <td style=" padding-bottom: 1em; ">
+                               <input class="detail mntnt" id="montant_saisi" name="montant_saisi" t-att-value="get_amount_residual(props.facture_selected.id)" t-on-change="captureChange" style="font-size: 22px;  border:none;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style=" padding-bottom: 1em;">
+                                <span class="label lb-journal-inv">Mode de règlement :</span>
+                            </td>
+                            <td class="client-detail amount-input" style=" padding-bottom: 1em; ">
+                            <select class='detail needsclick journal-inv-payment' name='facture_recuperes_id' t-on-change="captureChange" style="font-size: 22px; border:none;">
+                                <option value=''>None</option>
+                                <t t-foreach='env.pos.journals_recuperes' t-as='journal'>
+                                    <t t-if="journal.type == 'bank' or journal.type == 'cash'" >
+                                        <option t-att-value='journal.id'>
+                                            <t t-esc="journal.name"/>
+                                        </option>
+                                    </t>
+                                    <t t-elif="journal.type == 'avoir_type' and journal.avoir_journal == true">
+                                        <option t-att-value='journal.id'>
+                                            <t t-esc="journal.name"/>
+                                        </option>
+                                    </t>
+                                </t>
+                            </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
+
+

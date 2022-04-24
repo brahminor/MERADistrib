@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="facturesPayee2" owl="1">
+       <span class="control-button ctrl_btnFactPaye" style="right:100%; background-color: #875a7b; font-weight:bold; color: white; font-size:16px;
+        border-radius:22px" >
+        <span>Factures payées </span>
+        <span> </span>
+        <i class="fa fa-file-text-o"></i>
+       </span>
+   </t>
+   <t t-name="facturesAvoir2" owl="1">
+       <span class="control-button ctrl_btnFactPayeavoir" style="right:100%; background-color: #ffffff; font-weight:bold; font-size:16px; border-radius:22px" >
+           <span>Factures avoir</span>
+           <span> </span>
+           <i class="fa  fa-money"></i>
+       </span>
+   </t>
+</templates>
