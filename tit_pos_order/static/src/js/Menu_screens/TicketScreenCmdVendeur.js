@@ -72,15 +72,14 @@ const PosComponent = require('point_of_sale.PosComponent');
                         }); }); 
                         /// tester  actualisation de la page de cmd en attente////
         }   
-        selectOrder(com, id){
+        selectOrder(com, id, num_recu){
             //cette fonction permet de faire le chargement de la cmd
             let or = this.env.pos.get_order()
-            this.load_commande(com, id);
+            this.load_commande(com, id, num_recu);
         }
 
-        load_commande (commande_id, id) {
+        load_commande (commande_id, id, num_recu) {
             //cette fonction permet d'actualiser la page de saisie de la cmd
-
             var order = this.env.pos.add_new_order();
             //récupérer la commande selectinnée
             var commande = this.get_commande_by_id(id)
@@ -88,6 +87,7 @@ const PosComponent = require('point_of_sale.PosComponent');
             order.set_client(this.env.pos.db.get_partner_by_id(commande.partner_id[0]));
             // récupérer les order line de la commande selectionnée
             order.commande_id = id;
+            order.name = num_recu;
             order.commande_id_acompte = 0;
             var commande_line = this.get_commande_lines(commande.id)
             for (var i=0; i<commande_line.length;i++) {
@@ -99,15 +99,16 @@ const PosComponent = require('point_of_sale.PosComponent');
             }
             this.env.pos.delete_current_order();
             this.env.pos.set_order(order);
-             
+
         }
         show_new_screeen(){
             /*
             redirection vers la page de saisie de cmd mais vide sans ajout d'une nvlle 
             cmd dans menu cmd du natif du pos
             */
-            this.showScreen('ProductScreen');
-              
+            var v = this.env.pos.add_new_order();
+            this.env.pos.delete_current_order();
+            this.env.pos.set_order(v);  
         }
         get_commande_by_id (id) {
             /*

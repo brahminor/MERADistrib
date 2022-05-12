@@ -30,6 +30,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
             donne_de_facture_cree['amount_residual'] = facture_cree.amount_residual
             donne_de_facture_cree['partner_id'] = [facture_cree.partner_id.id, facture_cree.partner_id.name]
             donne_de_facture_cree['avoir_client'] = facture_cree.partner_id.avoir_client
+            donne_de_facture_cree['sale_order_id'] = sale_orders.id
+            donne_de_facture_cree['sale_order_amount_total'] = sale_orders.amount_total
             return donne_de_facture_cree
         else:
             # Create deposit product if necessary

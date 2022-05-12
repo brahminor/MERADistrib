@@ -75,7 +75,7 @@ odoo.define('tit_pos_order.RewardButton2', function(require) {
                         method: 'utilsateur_atteind_limite',
                         args: [fields],
                     });
-                    
+
                     if(limite_atteind > 0){
                         // le cas ou la limite de crédit est atteind
                         const { confirmed } = await this.showPopup('ValidationCommandePopup', {
@@ -94,6 +94,7 @@ odoo.define('tit_pos_order.RewardButton2', function(require) {
                                 let fields = {}
                                 fields['id'] = order.attributes.client.id
                                 fields['partner_id'] = order.attributes.client.id
+                                fields['num_recu'] = order.name
                                 fields['session_id'] = order.pos_session_id
                                 fields['vendeur_name'] = l.env.pos.get_cashier().name
                                 //création de la commande validée par le vendeur
@@ -155,6 +156,7 @@ odoo.define('tit_pos_order.RewardButton2', function(require) {
                                 let fields = {}
                                 fields['id'] = order.attributes.client.id
                                 fields['partner_id'] = order.attributes.client.id
+                                fields['num_recu'] = order.name
                                 fields['session_id'] = order.pos_session_id
                                 fields['vendeur_name'] = l.env.pos.get_cashier().name
                                 //création de la commande en attente

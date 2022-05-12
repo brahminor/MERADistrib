@@ -11,6 +11,7 @@
 			<field name="lst_price" eval="0"/>
 			<field name="available_in_pos" eval="True"/>
 			<field name="type">service</field>
+			<field name="invoice_policy">order</field>
 			<field name="tracking">none</field>
 			<field name="categ_id" ref="point_of_sale.product_category_pos"/>
 		</record>

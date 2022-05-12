@@ -20,6 +20,7 @@
                      <div class="orders">
                     <div class="header-row">
                         <div class="col start wide">Date</div>
+                        <div class="col start wide">Numéro de reçu</div>
                         <div class="col start wide">Client</div>
                         <div class="col start wide">Session</div>
                         <div class="col start wide">Vendeur</div> 
@@ -30,6 +31,9 @@
                         <div class="order-row pointer" >
                             <div class="col start wide">
                                 <t t-esc="getDate(cmd)"/> 
+                            </div>
+                            <div class="col start wide">
+                                <t t-esc="cmd.num_recu"/>
                             </div>
                             <div class="col start wide">
                                  <t t-esc="cmd.partner_id[1]"/>
@@ -43,7 +47,7 @@
                             </div>
 
                             <div class="col start wide">
-                                <button class='button button_suite_cmd' style="right:100%; background-color: #32CD32;"  title="Rembourser" t-on-click="selectOrder(cmd, cmd.id)">
+                                <button class='button button_suite_cmd' style="right:100%; background-color: #32CD32;"  title="Rembourser" t-on-click="selectOrder(cmd, cmd.id, cmd.num_recu)">
                                    Encaisser
                                 </button>
                             </div>

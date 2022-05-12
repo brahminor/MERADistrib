@@ -27,6 +27,10 @@ class resUsers(models.Model):
             return 9
         elif user_actif and user_actif.has_group('tit_pos_order.group_resp_caisse'):
             return 6
+        elif user_actif and user_actif.has_group('tit_pos_order.group_resp_site'):
+            return 10
+        elif user_actif and user_actif.has_group('tit_pos_order.group_dirigent'):
+            return 11
         elif user_actif and user_actif.has_group('point_of_sale.group_pos_manager'):
             return 7
         return 0

@@ -2,12 +2,48 @@
 
 from odoo import models, fields, api, _
 from datetime import date
+from odoo.exceptions import ValidationError
 
 class res_partner(models.Model):
     _inherit = "res.partner"
     
-    ref = fields.Char(default=lambda self: self.env['ir.sequence'].next_by_code('res.partner'))
-    
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super(res_partner, self).create(vals_list)
+        """
+        On ajoute ce traitement dans le but d'empecher le décalage 
+        si l'utilisateur a annulé la création
+        """
+        if res.position_fiscal_client_francais == True and not res.vat:
+            raise ValidationError(_("Le champ TVA est requis"))
+        res.ref = self.env['ir.sequence'].get('res.partner')
+        #verifier si c'est un client et non un fournisseur
+        if res.customer_rank !=0 :
+            #code comptable client doit être généré automatiquement
+            receivable_type = self.env.ref('account.data_account_type_receivable')
+            if receivable_type :
+                res.property_account_receivable_id = self.env['account.account'].create({          
+                                    'code': "411"+res.ref, 
+                                    'name': _("Clients - Ventes de biens ou de prestations de services -"+res.ref),
+                                    'reconcile': True,
+                                    'user_type_id': receivable_type.id,
+                                        })
+        return res
+
+    def write(self, vals):
+
+        #cette partie du if else est utilisée pour afficher le msg bloquant sur le pos
+        if vals.get('property_account_position_id'):
+            if self.env['account.fiscal.position'].browse(vals.get('property_account_position_id')).client_francais and (not vals.get('vat') and not self.vat):
+                raise ValidationError(_("Le champ TVA est requis"))
+        elif self.property_account_position_id:
+            if self.property_account_position_id.client_francais and (not vals.get('vat') and not self.vat):
+                raise ValidationError(_("Le champ TVA est requis"))
+
+        res = super(res_partner, self).write(vals)
+        
+        return res
+
     @api.model
     def _get_property_account_position_id(self):
         """

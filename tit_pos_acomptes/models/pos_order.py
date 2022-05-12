@@ -64,7 +64,7 @@ class pos_order(models.Model):
 
 	@api.model
 	def fill_commande_principale(self, pos_commande, num_recu):
-		"""cette fontion permet d'associer le bc au devis/commande et remplire le 
+		"""cette fontion permet d'associer le bc au devis/commande et remplire le
 		tableau des produits du devis par le produit acompte associé 
 		et permet de mettre de rendre le champ trait_tot du sale order en True
 		dans le cas du transfert de  la totalité du sale order vers le pos
@@ -112,9 +112,12 @@ class pos_order(models.Model):
 			montant_a_payer = 0
 			for l in payment_recrod:
 				montant_a_payer += l.amount
-			if payment_recrod.payment_method_id.cash_journal_id:
-				if payment_recrod.payment_method_id.cash_journal_id.type == 'avoir_type' and payment_recrod.payment_method_id.cash_journal_id.avoir_journal == True and montant_a_payer > 0:
-					pos_order.partner_id.avoir_client -= float(montant_a_payer)
+			if payment_recrod.payment_method_id.cash_journal_id and \
+					payment_recrod.payment_method_id.cash_journal_id.type == 'avoir_type' and \
+					payment_recrod.payment_method_id.cash_journal_id.avoir_journal == True and \
+					montant_a_payer > 0:
+				pos_order.partner_id.avoir_client -= float(montant_a_payer)
+		return True
 
 	@api.model
 	def validate_facture(self, pos_commande, num_recu):

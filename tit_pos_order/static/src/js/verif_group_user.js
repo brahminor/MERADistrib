@@ -32,15 +32,15 @@ odoo.define('tit_pos_order.verif_group_user', function (require) {
                         
                         var contents2 = $('.screen_profile');
                         contents2.find(".fact_non_pay").hide();// factures non payées
-                        contents.find(".devis_cmd_list").hide();//commandes b2b
+                        contents.find(".ctrl_btndevis_cmd_list").hide();//commandes b2b
                       
                     }
                     else if (result == 2) {
                         //caissier
                         var contents = $('.pos-content');
                         contents.find(".ctrl_btnFactNonPaye").show();//factures non payées
-                        contents.find(".ctrl_btnFactPaye").hide();//factures payées
-                        contents.find(".ctrl_btnFactPayeavoir").hide();//factures avoir client
+                        contents.find(".ctrl_btnFactPaye").show();//factures payées
+                        contents.find(".ctrl_btnFactPayeavoir").show();//factures avoir client
                         contents.find(".ctrl_btnValiderCmd").hide();//valider la commande
                         contents.find(".set-customer").show();//choisir client
                         contents.find(".pay").show();//paiement
@@ -51,14 +51,14 @@ odoo.define('tit_pos_order.verif_group_user', function (require) {
                         $('.ticket_cmd_vendeur').show();//cmd validées par le vendeur
                         var contents2 = $('.screen_profile');
                         contents2.find(".fact_non_pay").show();// factures non payées
-                        contents.find(".devis_cmd_list").hide();//commandes b2b
+                        contents.find(".ctrl_btndevis_cmd_list").hide();//commandes b2b
                     }
                     else if (result == 3) {
                         //comptable
                         var contents = $('.pos-content');
                         contents.find(".ctrl_btnFactNonPaye").show();//factures non payées
-                        contents.find(".ctrl_btnFactPaye").hide();//factures payées
-                        contents.find(".ctrl_btnFactPayeavoir").hide();//factures avoir client
+                        contents.find(".ctrl_btnFactPaye").show();//factures payées
+                        contents.find(".ctrl_btnFactPayeavoir").show();//factures avoir client
                         contents.find(".ctrl_btnValiderCmd").hide();//valider la commande
                         contents.find(".set-customer").show();//choisir client
                         contents.find(".pay").show();//paiement
@@ -69,7 +69,7 @@ odoo.define('tit_pos_order.verif_group_user', function (require) {
                         $('.ticket_cmd_vendeur').show();//cmd validées par le vendeur
                         var contents2 = $('.screen_profile');
                         contents2.find(".fact_non_pay").show();// factures non payées 
-                        contents.find(".devis_cmd_list").hide();//commandes b2b
+                        contents.find(".ctrl_btndevis_cmd_list").hide();//commandes b2b
                     }
                     else if (result == 5) {
                         //Responsable du service de livraison
@@ -87,7 +87,7 @@ odoo.define('tit_pos_order.verif_group_user', function (require) {
                         $('.ticket_cmd_vendeur').hide();//cmd validées par le vendeur 
                         var contents2 = $('.screen_profile');
                         contents2.find(".fact_non_pay").hide();// factures non payées
-                        contents.find(".devis_cmd_list").hide();//commandes b2b
+                        contents.find(".ctrl_btndevis_cmd_list").hide();//commandes b2b
                     }
                     else if (result == 6) {
                         //responsable de caisse
@@ -105,7 +105,7 @@ odoo.define('tit_pos_order.verif_group_user', function (require) {
                         $('.ticket_cmd_vendeur').show();//cmd validées par le vendeur
                         var contents2 = $('.screen_profile');
                         contents2.find(".fact_non_pay").show();// factures non payées
-                        contents.find(".devis_cmd_list").hide();//commandes b2b
+                        contents.find(".ctrl_btndevis_cmd_list").hide();//commandes b2b
                     }
                     else if (result == 8) {
                         // commercial
@@ -123,7 +123,7 @@ odoo.define('tit_pos_order.verif_group_user', function (require) {
                         $('.ticket_cmd_vendeur').hide();//cmd validées par le vendeur
                         var contents2 = $('.screen_profile');
                         contents2.find(".fact_non_pay").show();// factures non payées
-                        contents.find(".devis_cmd_list").show();//commandes b2b
+                        contents.find(".ctrl_btndevis_cmd_list").show();//commandes b2b
                     }
                     else if (result == 9) {
                         //responsable de commercial
@@ -141,9 +141,44 @@ odoo.define('tit_pos_order.verif_group_user', function (require) {
                         $('.ticket_cmd_vendeur').hide();//cmd validées par le vendeur
                         var contents2 = $('.screen_profile');
                         contents2.find(".fact_non_pay").show();// factures non payées
-                        contents.find(".devis_cmd_list").show();//commandes b2b
+                        contents.find(".ctrl_btndevis_cmd_list").show();//commandes b2b
                     }
-
+                    else if (result == 10) {
+                        //responsable de site
+                        var contents = $('.pos-content');
+                        contents.find(".ctrl_btnFactNonPaye").hide();//factures non payées
+                        contents.find(".ctrl_btnFactPaye").hide();//factures payées
+                        contents.find(".ctrl_btnFactPayeavoir").hide();//factures avoir client
+                        contents.find(".ctrl_btnValiderCmd").show();//valider la commande
+                        contents.find(".set-customer").show();//choisir client
+                        contents.find(".pay").show();//paiement
+                        contents.find(".next").show();//nouvelle commande après le paiement
+                        contents.find(".ctrl_btnRetour").show();//modifier prix de vente
+                        $('.ticket-button').show(); // menu commandes du natif
+                        $('.ticket_cmd_attente').show();//cmd en attente
+                        $('.ticket_cmd_vendeur').show();//cmd validées par le vendeur
+                        var contents2 = $('.screen_profile');
+                        contents2.find(".fact_non_pay").hide();// factures non payées
+                        contents.find(".ctrl_btndevis_cmd_list").hide();//commandes b2b
+                    }
+                    else if (result == 11) {
+                        //dirigent
+                        var contents = $('.pos-content');
+                        contents.find(".ctrl_btnFactNonPaye").hide();//factures non payées
+                        contents.find(".ctrl_btnFactPaye").hide();//factures payées
+                        contents.find(".ctrl_btnFactPayeavoir").hide();//factures avoir client
+                        contents.find(".ctrl_btnValiderCmd").show();//valider la commande
+                        contents.find(".set-customer").show();//choisir client
+                        contents.find(".pay").show();//paiement
+                        contents.find(".next").show();//nouvelle commande après le paiement
+                        contents.find(".ctrl_btnRetour").show();//modifier prix de vente
+                        $('.ticket-button').show(); // menu commandes du natif
+                        $('.ticket_cmd_attente').show();//cmd en attente
+                        $('.ticket_cmd_vendeur').show();//cmd validées par le vendeur
+                        var contents2 = $('.screen_profile');
+                        contents2.find(".fact_non_pay").hide();// factures non payées
+                        contents.find(".ctrl_btndevis_cmd_list").hide();//commandes b2b
+                    }
                     else if (result == 7) {
                         //admin du pos
                         var contents = $('.pos-content');
@@ -161,7 +196,7 @@ odoo.define('tit_pos_order.verif_group_user', function (require) {
                         $('.ticket_cmd_vendeur').show();//cmd validées par le vendeur
                         var contents2 = $('.screen_profile');
                         contents2.find(".fact_non_pay").hide();// factures non payées
-                        contents.find(".devis_cmd_list").show();//commandes b2b
+                        contents.find(".ctrl_btndevis_cmd_list").show();//commandes b2b
                         
                     }
                     else if (result == 0) {
@@ -181,7 +216,7 @@ odoo.define('tit_pos_order.verif_group_user', function (require) {
                         $('.ticket_cmd_vendeur').hide();//cmd validées par le vendeur
                         var contents2 = $('.screen_profile');
                         contents2.find(".fact_non_pay").hide();// factures non payées
-                        contents.find(".devis_cmd_list").hide();//commandes b2b
+                        contents.find(".ctrl_btndevis_cmd_list").hide();//commandes b2b
                     }
             }
     };

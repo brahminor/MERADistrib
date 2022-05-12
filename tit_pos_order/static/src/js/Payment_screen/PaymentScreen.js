@@ -336,13 +336,12 @@ odoo.define('tit_pos_order.PaymentScreenButton', function(require) {
                                 model: 'pos.order',
                                 method: 'fill_commande_principale',
                                 args: [commande_ancienne, self.env.pos.get_order().name]
-                            }).then(function(u){  
+                            }).then(function(u){
                                 rpc.query({
                                     model: 'pos.order',
                                     method: 'validate_facture',
                                     args: [commande_ancienne, self.env.pos.get_order().name]
-                                }).then(function(y){ 
-
+                                }).then(function(y){
                                     rpc.query({
                                         model: 'account.move',
                                         method: 'search_read',
@@ -356,13 +355,12 @@ odoo.define('tit_pos_order.PaymentScreenButton', function(require) {
                                         
                                         }).then(function (partner_result){
                                             self.env.pos.partner = partner_result;
-
-                                            self.env.pos.delete_current_order();
                                             self.reload_cmd_vendeur(commande_ancienne);
                                         });
                                     });});
                                 });
                             }
+                            this.reload_cmd_vendeur(commande_ancienne);
                         }
                         else {
                             // le cas ou la limite de crédit est atteind
@@ -370,8 +368,9 @@ odoo.define('tit_pos_order.PaymentScreenButton', function(require) {
                                 title:('Limite de crédit'),
                                 body:('La limite de crédit est dépassée pour ce client !')
                             });
-                        } } 
-                    else{
+                        }
+                        }
+                    else{//crédit n'est pas éteind
                             var order = this.env.pos.get_order()
                             var selected_option = order.selected_option
                             var down_payment_saisi = order.down_payment_saisi    
@@ -438,6 +437,7 @@ odoo.define('tit_pos_order.PaymentScreenButton', function(require) {
                                             });
                                         }
                                         else if (u == (-3)){
+                                            self.env.pos.delete_current_order();
                                             self.show_new_screeen();
                                             Gui.showPopup("ValidationCommandeSucces", {
                                                title : self.env._t("Le paiement d'acompte est enregistré avec succès"),

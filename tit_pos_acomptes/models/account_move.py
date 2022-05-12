@@ -5,6 +5,9 @@ from odoo import models, fields, api, _
 class account_move(models.Model):
     _inherit = "account.move"
 
+    sale_order_id = fields.Many2one('sale.order', "Bon de commande")
+    sale_order_amount_total = fields.Float('Montant totale du bon de commande', relate='sale_order_id.amount_total', help="Ce champ contient le montant totale du bon de cmd associé à la facture pour etre utilisé dans le pos")
+
     @api.model
     def add_invoice_payment_acompte(self, amount, invoice_ids, id_meth_pay):        
         """

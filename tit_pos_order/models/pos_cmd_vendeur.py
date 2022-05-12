@@ -11,6 +11,7 @@ class pos_commande(models.Model):
     journal_id = fields.Many2one('account.journal',string="Journal")
     commande_suivante = fields.Many2one('pos.cmd_vendeur', string = "Commande suivante", help='Ce champ permet d\'indiquer la commande suivante contenant la suite du paiement')
     partner_id = fields.Many2one('res.partner', string = "Client")
+    num_recu = fields.Char(string = "Numéro de reçu", help="Numéro de reçu de la commande crée depuis le pos")
     session_id = fields.Many2one('pos.session', string = "Session")
     vendeur_name = fields.Char(string = 'Vendeur', help="nom du vendeur quia a crée la commande")
     config_id = fields.Many2one('pos.config', related = "session_id.config_id", string = "Point de vente", store = True)
@@ -37,7 +38,9 @@ class pos_commande(models.Model):
             commande_coordonnee['session_id'] = commande['session_id']
         if 'vendeur_name' in commande:
             commande_coordonnee['vendeur_name'] = commande['vendeur_name']
-        
+        if 'num_recu' in commande:
+            commande_coordonnee['num_recu'] = commande['num_recu']
+
         commande_id = self.create(commande_coordonnee).id
         return commande_id
 

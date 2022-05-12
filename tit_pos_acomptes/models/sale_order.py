@@ -1,13 +1,22 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 class sale_order(models.Model):
     _inherit = "sale.order"
     
     acompte = fields.Monetary('Acompte', compute = "get_montants")
     montant_du = fields.Monetary('Montant dû', compute = 'get_montants')
-    trait_tot = fields.Boolean('traité totalement depuis le pos',  copy = False, help = "Ce champ permet de déterminer si le traitement du sale order est terminé depuis le pos tel que tous les produits sont vendus ")
+    trait_tot = fields.Selection([('trait_total', "Traité totalement"),('trait_part','Traité partiellement')], store=True, default='trait_part', string='traité totalement depuis le pos',  copy = False, help = "Ce champ permet de déterminer si le traitement du sale order est terminé depuis le pos tel que tous les produits sont vendus ", compute='_get_tarit_totalement')
+
+    @api.depends('montant_du')
+    def _get_tarit_totalement(self):
+        for record in self:
+            if record.montant_du <= 0:
+                record.trait_tot = 'trait_total'
+            else:
+                record.trait_tot = 'trait_part'
     
     @api.model
     def creer_facture_totale(self, sale_order_id):
@@ -33,7 +42,7 @@ class sale_order(models.Model):
             }
             pay = self.env['sale.advance.payment.inv'].with_context({'active_id': sale_order_record.id,'active_ids': so,'active_model': 'sale.order'}).create(payment_record)
             invoice_generated = pay.create_invoices_from_pos()
-            sale_order_record.trait_tot = True
+            sale_order_record.trait_tot = 'trait_total'
             return invoice_generated
     
     @api.depends('amount_total','order_line')
@@ -42,17 +51,18 @@ class sale_order(models.Model):
         cette fonction eprmet de calculer le montant du et l'acompte à partir des 
         acomptes payés et marqués dans les lignes des articles associées au SO
         """
-        res_config_record = self.env['res.config.settings'].search([])
-        if res_config_record:
+        product_id = int(self.env['ir.config_parameter'].sudo().get_param('sale.default_deposit_product_id'))
+        if product_id > 0:
             for record in self:
                 somme_montant_paye = 0
                 somme_du_paye = 0
                 for  pod_order_record in record.order_line:
-                    if pod_order_record.product_id.id == res_config_record.deposit_default_product_id[0].id:
+                    if pod_order_record.product_id.id == product_id:
                         somme_montant_paye += pod_order_record.price_unit
                 record.acompte = somme_montant_paye
-                record.montant_du = record.amount_total - somme_montant_paye
                 
                 for facture_record in record.invoice_ids:
                     somme_du_paye += facture_record.amount_total
                 record.montant_du = record.amount_total - somme_du_paye
+        else:
+            raise ValidationError(_("Veuillez configurer le produit acompte s.v.p !"))
